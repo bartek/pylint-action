@@ -15,11 +15,17 @@ if [[ -z "$GITHUB_TOKEN" ]]; then
     exit 1
 fi
 
+
+URI=https://api.github.com
+API_VERSION=v3
+API_HEADER="Accept: application/vnd.github.${API_VERSION}+json; application/vnd.github.antiope-preview+json"
+AUTH_HEADER="Authorization: token ${GITHUB_TOKEN}"
+
 main() {
-    echo "Linting!"
     # Validate the github token
     curl -o /dev/null -sSL -H "${AUTH_HEADER}" -H "${API_HEADER}" "${URI}/repos/${GITHUB_REPOSITORY}" || { echo "Error: Invalid repo, token or network issue!";  exit 1; }
 
+    echo "Linting!"
 
     git --no-pager diff --name-only \
         FETCH_HEAD $(git merge-base FETCH_HEAD master) | \
