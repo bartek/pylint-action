@@ -9,13 +9,15 @@ RUN apk add --no-cache \
    python3-dev \
    gcc \
    build-base \
-   curl
+   curl \
+   git
 
 RUN python3 -m ensurepip
 RUN pip3 install --upgrade pip
 RUN pip3 install \
    linty-fresh \
-   pylint
+   pylint \
+   pylint-django
 
 COPY "run-linty-fresh.sh" /usr/bin/run-linty-fresh
 
