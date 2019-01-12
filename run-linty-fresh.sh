@@ -32,7 +32,7 @@ main() {
 
     # Get modified Python files and pass to pylint
     git --no-pager diff --name-only master \
-        grep .py | xargs pylint | tee pylint.txt
+        | grep .py | xargs pylint | tee pylint.txt
 
     PR_URL="{$URI}/{$GITHUB_REPOSITORY}/pull/{$NUMBER}"
 
