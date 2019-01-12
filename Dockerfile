@@ -10,6 +10,7 @@ RUN apk add --no-cache \
    gcc \
    build-base \
    curl \
+   jq \
    git
 
 RUN python3 -m ensurepip
