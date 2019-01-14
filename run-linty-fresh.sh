@@ -31,6 +31,11 @@ main() {
 
     git remote -v
 
+    git branch -a
+
+    # Revise master to be target branch eventually
+    git fetch origin master
+
     # Get modified Python files and pass to pylint
     git --no-pager diff --name-only master | grep .py | xargs pylint | tee pylint.txt
 
