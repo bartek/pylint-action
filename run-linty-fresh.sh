@@ -43,7 +43,8 @@ main() {
     export GITHUB_AUTH_TOKEN="${GITHUB_TOKEN}"
 
     linty_fresh --pr_url ${PR_URL} --commit "${GITHUB_SHA}" \
-                --linter pylint pylint.txt
+                --linter pylint pylint.txt \
+                --linter_name "A friendly helper"
 
     echo "All done"
 
