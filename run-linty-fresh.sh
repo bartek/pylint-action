@@ -29,6 +29,8 @@ main() {
 
     git status
 
+    git remote -v
+
     # Get modified Python files and pass to pylint
     git --no-pager diff --name-only master | grep .py | xargs pylint | tee pylint.txt
 
