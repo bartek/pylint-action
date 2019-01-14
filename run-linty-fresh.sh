@@ -5,7 +5,6 @@
 # - GITHUB_SHA
 # - GITHUB_REPOSITORY
 # - $URI
-# - $NUMBER
 
 set +e  # don't immediately exit on fail
 set -o pipefail
@@ -32,7 +31,10 @@ main() {
     # Get modified Python files and pass to pylint
     git --no-pager diff --name-only origin/master | grep .py | xargs pylint > pylint.txt
 
-    PR_URL="{$URI}/{$GITHUB_REPOSITORY}/pull/{$NUMBER}"
+    # Get the pull request number.
+    NUMBER=$(jq --raw-output .number "$GITHUB_EVENT_PATH")
+
+    PR_URL="${URI}/${GITHUB_REPOSITORY}/pull/${NUMBER}"
 
     LINT_RESULT=$?
 
