@@ -7,7 +7,7 @@
 # - $URI
 # - $NUMBER
 
-set -e  # immediate exit on fail
+set +e  # don't immediately exit on fail
 set -o pipefail
 
 if [[ -z "$GITHUB_TOKEN" ]]; then
@@ -37,14 +37,18 @@ main() {
     git fetch origin master
 
     # Get modified Python files and pass to pylint
-    git --no-pager diff --name-only origin/master | grep .py | xargs pylint | tee pylint.txt
+    git --no-pager diff --name-only origin/master | grep .py | xargs pylint > pylint.txt
 
     PR_URL="{$URI}/{$GITHUB_REPOSITORY}/pull/{$NUMBER}"
+
+    LINT_RESULT=$?
 
     linty_fresh --pr_url ${PR_URL} --commit "${GITHUB_SHA}" \
                 --linter pylint pylint.txt
 
     echo "All done"
+
+    exit ${LINT_RESULT}
 }
 
 main
