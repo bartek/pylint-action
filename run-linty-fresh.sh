@@ -27,9 +27,6 @@ main() {
 
     echo "Linting!"
 
-    # Output github event data for curiosity
-    jq --raw-output . "${GITHUB_EVENT_PATH}"
-
     git status
 
     # Get modified Python files and pass to pylint
