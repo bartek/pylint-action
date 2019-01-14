@@ -15,7 +15,6 @@ if [[ -z "$GITHUB_TOKEN" ]]; then
     exit 1
 fi
 
-
 URI=https://api.github.com
 API_VERSION=v3
 API_HEADER="Accept: application/vnd.github.${API_VERSION}+json; application/vnd.github.antiope-preview+json"
@@ -27,12 +26,6 @@ main() {
 
     echo "Linting!"
 
-    git status
-
-    git remote -v
-
-    git branch -a
-
     # Revise master to be target branch eventually
     git fetch origin master
 
@@ -42,6 +35,8 @@ main() {
     PR_URL="{$URI}/{$GITHUB_REPOSITORY}/pull/{$NUMBER}"
 
     LINT_RESULT=$?
+
+    export GITHUB_AUTH_TOKEN="${GITHUB_TOKEN}"
 
     linty_fresh --pr_url ${PR_URL} --commit "${GITHUB_SHA}" \
                 --linter pylint pylint.txt
