@@ -34,6 +34,8 @@ main() {
     # Get the pull request number.
     NUMBER=$(jq --raw-output .number "$GITHUB_EVENT_PATH")
 
+    echo "running $GITHUB_ACTION for PR #${NUMBER}"
+
     PR_URL="${URI}/${GITHUB_REPOSITORY}/pull/${NUMBER}"
 
     LINT_RESULT=$?
