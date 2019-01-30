@@ -23,6 +23,16 @@ main() {
     # Validate the github token
     curl -o /dev/null -sSL -H "${AUTH_HEADER}" -H "${API_HEADER}" "${URI}/repos/${GITHUB_REPOSITORY}" || { echo "Error: Invalid repo, token or network issue!";  exit 1; }
 
+    # Get the time of Github action
+    action=$(jq --raw-output .action "$GITHUB_EVENT_PATH")
+
+    # If the event was not open (initial PR) or synchronize (rebase etc), then
+    # skip linting. Becomes noise otherwise.
+    if [[ "$action" != "synchronize" ]] && [[ "$action" != "opened" ]]; then
+        echo "Action was $action, skipping."
+        exit 0
+    fi
+
     # Setup a virtual environment and install dependencies.
     python3 -m venv ./.ve
     source ./ve/bin/activate
