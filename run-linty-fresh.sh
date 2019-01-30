@@ -23,6 +23,11 @@ main() {
     # Validate the github token
     curl -o /dev/null -sSL -H "${AUTH_HEADER}" -H "${API_HEADER}" "${URI}/repos/${GITHUB_REPOSITORY}" || { echo "Error: Invalid repo, token or network issue!";  exit 1; }
 
+    # Setup a virtual environment and install dependencies.
+    python3 -m venv ./.ve
+    source ./ve/bin/activate
+    pip install -r requirements.txt
+
     echo "Linting!"
 
     # Revise master to be target branch eventually
